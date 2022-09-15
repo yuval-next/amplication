@@ -15,5 +15,5 @@ model User {
   lastName  String?
   username  String   @unique
   password  String
-  roles     String[]
+  roles     Json
 }
