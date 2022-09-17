@@ -1,6 +1,6 @@
 datasource postgres {
   provider = "postgresql"
-  url      = env("POSTGRESQL_URL")
+  url      = env("DB_URL")
 }
 
 generator client {
@@ -15,5 +15,5 @@ model User {
   lastName  String?
   username  String   @unique
   password  String
-  roles     String[]
+  roles     Json
 }
