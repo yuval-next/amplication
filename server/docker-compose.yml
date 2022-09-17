@@ -12,7 +12,6 @@ services:
       BCRYPT_SALT: ${BCRYPT_SALT}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
       JWT_EXPIRATION: ${JWT_EXPIRATION}
-      DB_URL: postgres://${DB_USER}:${DB_PASSWORD}@db:5433
     depends_on:
       - migrate
   migrate:
@@ -25,17 +24,16 @@ services:
     environment:
       POSTGRESQL_URL: postgres://${POSTGRESQL_USER}:${POSTGRESQL_PASSWORD}@db:5432
       BCRYPT_SALT: ${BCRYPT_SALT}
-      DB_URL: postgres://${DB_USER}:${DB_PASSWORD}@db:5432
     depends_on:
       db:
         condition: service_healthy
   db:
     image: postgres:12
     ports:
-      - ${DB_PORT}:5432
+      - ${POSTGRESQL_PORT}:5432
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${POSTGRESQL_USER}
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
     volumes:
       - postgres:/var/lib/postgresql/data
     healthcheck:
@@ -44,9 +42,9 @@ services:
         - pg_isready
         - -q
         - -d
-        - ${DB_DB_NAME}
+        - ${POSTGRESQL_DB_NAME}
         - -U
-        - ${DB_USER}
+        - ${POSTGRESQL_USER}
       timeout: 45s
       interval: 10s
       retries: 10
