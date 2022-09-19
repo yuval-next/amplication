@@ -8,7 +8,6 @@ services:
     ports:
       - ${SERVER_PORT}:3000
     environment:
-      POSTGRESQL_URL: postgres://${POSTGRESQL_USER}:${POSTGRESQL_PASSWORD}@db:5433
       BCRYPT_SALT: ${BCRYPT_SALT}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
       JWT_EXPIRATION: ${JWT_EXPIRATION}
@@ -23,7 +22,6 @@ services:
     command: npm run db:init
     working_dir: /app/server
     environment:
-      POSTGRESQL_URL: postgres://${POSTGRESQL_USER}:${POSTGRESQL_PASSWORD}@db:5432
       BCRYPT_SALT: ${BCRYPT_SALT}
       DB_URL: postgres://${DB_USER}:${DB_PASSWORD}@db:5432
     depends_on:
